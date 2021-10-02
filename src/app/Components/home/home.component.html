@@ -1,0 +1,67 @@
+<app-header></app-header>
+
+<div class="container">
+
+    <section class="row d-block py-5" id="sec1">
+        <form #form class="form-group">
+            <div class="d-block d-md-flex">
+                <div class="col-12 col-md-6  mx-2">
+                    <label>Assign To</label>
+                    <select class="form-control" (change)="gg($event)">
+                        <option>Choose Employee</option>
+                        <option *ngFor="let item of userArray" #selected value="{{item.id}}">{{item.fname}} {{item.lname}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 mx-2">
+                <label>Task Name</label>
+                <input class="form-control" type="text" placholder="TaskName" #TaskName id="TaskName" name="TaskName"/>
+                </div>
+            </div>
+            <div class="d-block d-md-flex">
+                <div class="col-12 col-md-6 mx-2">
+                    <label>Deliver Date</label>
+                    <input class="form-control" min="{{today}}" type="date" #date id="deliverDate" name="deliverDate">
+                </div>
+                <div class="col-12 col-md-6 mx-2">
+                <label>Description</label>
+                <textarea class="form-control"minlength="10" id="textarea" #description maxlength="100"></textarea>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-success mt-5" type="submit" (click)="addTasks(TaskName.value,date.value,description.value)">Add</button>
+
+            </div>
+        </form>
+        
+    </section>
+
+
+    <section class="row d-block py-5" id="sec2">
+        <div style="height: 400px;overflow-y: scroll;">
+            <table class="table table-bordered">
+                <thead>
+                 <th colspan="6">Tasks</th>
+                </thead>
+               <div class="row d-block" *ngFor="let item of taskList" >
+                       <div class="d-block d-md-flex">
+                           <div class="col-8" >
+                               <h3>{{item.applicationUsers.fname}} {{item.applicationUsers.lname}}</h3>
+                            </div>
+                           <div class="col-4" style="color: green;">{{item.deliverDate  | date:'yyyy-MM-dd'}} </div>
+                       </div>
+                        <div class="d-block d-md-flex">
+                           <div class="col-8">{{item.discription}}</div>
+                           <div class="col-4">
+                               <input type="checkbox" *ngIf="!item.taskState" (click)="check(item.taskId)" id="taskState" name="taskState"/>
+                               <span *ngIf="item.taskState" class="mx-2" style="color: red;">Done</span>
+                               <span *ngIf="!item.taskState" class="mx-2">Mark as Done</span>
+                            </div>
+                       </div>
+                 </div>
+            </table>
+       </div>
+    </section>
+
+</div>
+
+<app-footer></app-footer>
